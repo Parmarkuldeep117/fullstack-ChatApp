@@ -8,7 +8,7 @@ const server = new http.createServer(app)
 
 
 const usersocketMap = new Map()
-const allowedOrigins = process.env.NODE_ENV === "production" ? [process.env.CLIENT_URL] : ["http://localhost:5173"]
+const allowedOrigins = [process.env.CLIENT_URL]
 
 const io = new Server(server, {
     cors: {
