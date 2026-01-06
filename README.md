@@ -156,20 +156,20 @@ If you like this project, give it a ⭐ on GitHub — it really helps!
 
 ## 📸 Screenshots
 
-> Replace the placeholders below with your uploaded image URLs (GitHub, Imgur, Cloudinary, etc.)
+> Screenshots of the app interfaces
 
 ### 🔐 Authentication (Login / Signup)
 
-![Login Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/1#issue-3784784960)
-![Signup Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/2#issue-3784788233)
+![Login Page](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/login-page.png)
+![Signup Page](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/signup-page.png)
 
 ### 💬 Chat Interface
 
-![Chat UI Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/6#issue-3784818389)
+![Chat UI](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/user-message-page.png)
 
-### 🧑‍🤝‍🧑 User List / Conversations
+### 🧑‍🤝‍🧑 User List / Profile / Settings
 
-![User List Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/3#issue-3784789690)
-![User Profile Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/4#issue-3784790526)
-![Settings Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/5#issue-3784792124)
-
+![User Home](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/user-home-page.png)
+![User Profile](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/user-profile-page.png)
+![Settings Page 1](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/settings-page1.png)
+![Settings Page 2](https://raw.githubusercontent.com/Parmarkuldeep117/fullstack-ChatApp/main/screenshots/settings-page2.png)
