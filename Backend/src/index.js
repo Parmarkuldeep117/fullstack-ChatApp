@@ -31,7 +31,7 @@ if(process.env.NODE_ENV==="production"){
 }
 
 
-server.listen(port,"0.0.0.0", async () => {
+server.listen(port, async () => {
     await connectDb()
     console.log(`server running on http://localhost:${port}`)
 })
