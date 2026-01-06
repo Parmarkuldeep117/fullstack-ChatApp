@@ -160,16 +160,16 @@ If you like this project, give it a ⭐ on GitHub — it really helps!
 
 ### 🔐 Authentication (Login / Signup)
 
-![Login Screenshot](PASTE_LOGIN_SCREENSHOT_URL_HERE)
+![Login Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/1#issue-3784784960)
+![Signup Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/2#issue-3784788233)
 
 ### 💬 Chat Interface
 
-![Chat UI Screenshot](PASTE_CHAT_UI_SCREENSHOT_URL_HERE)
+![Chat UI Screenshot]()
 
 ### 🧑‍🤝‍🧑 User List / Conversations
 
-![User List Screenshot](PASTE_USER_LIST_SCREENSHOT_URL_HERE)
+![User List Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/3#issue-3784789690)
+![User Profile Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/4#issue-3784790526)
+![Settings Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/5#issue-3784792124)
 
-### 📱 Responsive View (Optional)
-
-![Mobile View Screenshot](PASTE_MOBILE_SCREENSHOT_URL_HERE)
