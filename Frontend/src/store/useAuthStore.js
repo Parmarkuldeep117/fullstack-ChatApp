@@ -98,7 +98,7 @@ export const useAuthStore = create((set, get) => ({
         const { authUser } = get()
 
         if (!authUser || get().socket) return;
-        const socket = io("https://fullstack-chatapp-wudv.onrender.com/api", {
+        const socket = io("https://fullstack-chatapp-wudv.onrender.com", {
             auth: {
                 userId: authUser._id
             }

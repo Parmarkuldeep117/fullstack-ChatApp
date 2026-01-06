@@ -8,11 +8,10 @@ const server = new http.createServer(app)
 
 
 const usersocketMap = new Map()
-const allowedOrigins = [process.env.CLIENT_URL]
 
 const io = new Server(server, {
     cors: {
-        origin: allowedOrigins,
+        origin: process.env.CLIENT_URL,
         credentials: true,
     }
 })
