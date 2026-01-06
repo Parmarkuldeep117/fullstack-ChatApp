@@ -1,5 +1,5 @@
 require("dotenv").config()
-const {app, server} = require("./lib/socket.io.js")
+const { app, server } = require("./lib/socket.io.js")
 const express = require("express")
 const cors = require("cors")
 const path = require("path")
@@ -22,12 +22,14 @@ app.use(cors({
 app.use("/api/auth", userRoute)
 app.use("/api/messages", messageRoute)
 
-if(process.env.NODE_ENV==="production"){
-    app.use(express.static(path.join(__dirname,"../Frontend/dist")))
+if (process.env.NODE_ENV === "production") {
+    const frontendPath = path.join(__dirname, "../../Frontend/dist");
 
-    app.get("*", (req,res)=>{
-        res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"))
-    })
+    app.use(express.static(frontendPath));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(frontendPath, "index.html"));
+    });
 }
 
 
