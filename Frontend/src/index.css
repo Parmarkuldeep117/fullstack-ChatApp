@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+    themes: all;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@layer utilities {
+
+    .font-black-ops {
+        font-family: "Black Ops One", system-ui;
+        font-weight: 500;
+        font-style: normal;
+    }
+
+    .font-bartle {
+        font-family: "BBH Bartle", sans-serif;
+    }
+
+}
+
+@layer base {
+    .brand-font {
+        font-family: var(--font-bartle);
+        letter-spacing: 0.08em;
+    }
+}
+
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none;
+}
+
+@layer utilities {
+    .scrollbar ::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
+
+.active {
+    color: rgb(244, 244, 55);
+    font-size: clamp(0.5rem, 1vw, 1.5rem);
+    box-sizing: border-box;
+}
+
+.passive {
+    color: white;
+    font-size: clamp(0.5rem, 1vw, 1.5rem);
+    box-sizing: border-box;
+}
+
+.avatar-container {
+    position: relative;
+    anchor-name: --avatar;
+}
+
+.camera-button {
+    position: absolute;
+    position-anchor: --avatar;
+    position-area: center;
+    translate: 140% 160%;
+}
+
+.name,
+.email {
+    font-size: clamp(0.5rem, 0.7rem, 1rem);
+}
+
+.account {
+    font-size: clamp(0.8rem, 1rem, 1.2rem);
+}
+
+.wid {
+    height: clamp(15px, 20px, 25px)
+}
+
+.griddy {
+    display: grid;
+    box-sizing: border-box;
+    grid-template-columns: 300px 1fr;
+}
+
+@media (max-width: 630px) {
+    .media {
+        display: grid;
+        grid-template-columns: repeat(2, 10px);
+        position: absolute;
+        inset: 0;
+        padding: 4px;
+        gap: 4px;
+    }
+
+    .main-media {
+        padding: 5px;
+        position: relative;
+        height: 32px;
+        width: 32px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: start;
+    }
+
+
+    .profile {
+        width: 90%;
+        padding: 15px;
+    }
+
+    /* .right {
+        display: none;
+    } */
+
+    .left {
+        width: 95vw;
+    }
+
+    nav {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        justify-content: end;
+        right: -300px;
+        top: 5px;
+        gap: 10px;
+        border-radius: 8px;
+        width: 220px;
+        padding: 10px;
+        height: 180px;
+        z-index: 99;
+    }
+
+    .menu {
+        display: block;
+        z-index: 100px;
+        background-color: bisque;
+        padding: 10px;
+        border-radius: 20px;
+    }
+
+    .exit {
+        display: block;
+        z-index: 100px;
+        background-color: rgb(145, 114, 76);
+        padding: 10px;
+        border-radius: 20px;
+    }
+}

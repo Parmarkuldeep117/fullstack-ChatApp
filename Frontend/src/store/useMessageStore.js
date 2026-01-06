@@ -1,0 +1,147 @@
+import { toast } from "react-hot-toast"
+import { create } from "zustand"
+import { api } from "../lib/axios"
+import { useAuthStore } from "./useAuthStore"
+
+export const useMessageStore = create((set, get) => ({
+    messages: [],
+    users: [],
+    selectedUsers: null,
+    isUserLoading: false,
+    isMessageLoading: false,
+    isUploadingFile: false,
+
+
+    getUsers: async () => {
+        set({ isUserLoading: true })
+        try {
+            const res = await api.get("/messages/users")
+            set({ users: res.data })
+        } catch (error) {
+            console.log('Eror while getting the users', error);
+            toast.error(error.response?.data?.message)
+        }
+        finally {
+            set({ isUserLoading: false })
+        }
+    },
+
+    listenToMessages: () => {
+        const { socket } = useAuthStore.getState();
+        if (!socket) return;
+
+        socket?.off("new-message")
+        socket.on("new-message", (message) => {
+            set(state => {
+                const currentChat = state.selectedUsers && (state.selectedUsers._id === message.senderId || state.selectedUsers._id === message.receiverId)
+
+                return {
+                    messages: currentChat ? [...state.messages, message] : state.messages,
+                    users: state.users.map(user => (
+                        user._id === message.senderId ? { ...user, lastMessage: message } : user
+                    ))
+
+                }
+            })
+        })
+
+        socket?.off("message-delivered")
+        socket.on("message-delivered", ({ messageIds }) => (
+            set(state => ({
+                messages: state.messages.map(msg => (
+                    messageIds.includes(msg._id) ? { ...msg, status: "delivered" } : msg
+                )),
+                users: state.users.map(user => (
+                    messageIds.includes(user.lastMessage?._id) ? { ...user, lastMessage: { ...user.lastMessage, status: "delivered" } } : user
+                ))
+            }))
+        ))
+
+    },
+
+    stopListening: () => {
+        const { socket } = useAuthStore.getState()
+        if (!socket) return
+        socket?.off("new-message")
+        socket?.off("message-delivered")
+        // socket?.off("mark-read")
+    },
+
+    getMessages: async (userId) => {
+        set({ isMessageLoading: true })
+        try {
+            const res = await api.get(`/messages/${userId}`)
+            set({ messages: res.data })
+            // console.log("Messages from backend:", res.data);
+        } catch (error) {
+            console.log('Error while getting messages', error);
+            toast.error(error.response?.data?.message)
+        }
+        finally {
+            set({ isMessageLoading: false })
+        }
+    },
+
+    sendMessages: async (formData) => {
+        set({ isUploadingFile: true })
+        try {
+            const { selectedUsers, messages, users } = get()
+
+            if (!selectedUsers?._id) {
+                toast.error("user not selected")
+                return
+            }
+            const res = await api.post(`/messages/send/${selectedUsers._id}`, formData)
+            const newMessage = res.data
+
+            set({
+                messages: [...messages, newMessage],
+                users: users.map(u =>
+                    u._id === selectedUsers._id
+                        ? { ...u, lastMessage: newMessage }
+                        : u
+                )
+            })
+        } catch (error) {
+            console.log('Error while sending message', error);
+            toast.error(error?.response?.data.message)
+
+        }
+        finally {
+            set({ isUploadingFile: false })
+        }
+
+    },
+
+    setUser: async (user) => {
+        set({ selectedUsers: user, isMessageLoading: true, messages: [] });
+
+        try {
+            const res = await api.get(`/messages/${user._id}`);
+            set({ messages: res.data });
+        } catch (error) {
+            toast.error(error.response?.data?.message);
+        } finally {
+            set({ isMessageLoading: false });
+        }
+    },
+
+    reset: () => {
+        set({ messages: [], selectedUsers: null })
+    },
+
+    setUserById: (userId) => {
+        const { users, getUsers } = get()
+
+        if (!users.length) {
+            getUsers().then(() => {
+                const user = get().users.find(u => u._id === userId)
+                if (user) set({ selectedUsers: user })
+            })
+        } else {
+            const user = users.find(u => u._id === userId)
+            if (user) set({ selectedUsers: user })
+        }
+    }
+
+}))
