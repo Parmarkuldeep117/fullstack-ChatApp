@@ -98,7 +98,7 @@ export const useAuthStore = create((set, get) => ({
         const { authUser } = get()
 
         if (!authUser || get().socket) return;
-        const socket = io(import.meta.env.MODE !== "development" ? import.meta.env.VITE_SOCKET_URL : "http://localhost:5001", {
+        const socket = io(import.meta.env.MODE !== "development" ? "" : "http://localhost:5001", {
             auth: {
                 userId: authUser._id
             }
