@@ -17,7 +17,7 @@ const io = new Server(server, {
     }
 })
 io.on("connection", async (socket) => {
-    const userId = socket.handshake.auth.userId
+    const userId = socket.handshake.auth.userId.toString()
     if (!userId) return
 
     if (!usersocketMap.has(userId)) {

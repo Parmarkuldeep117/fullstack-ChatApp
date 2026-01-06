@@ -29,7 +29,7 @@ const LeftSide = () => {
     };
 
 
-    const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id)) : users
+    const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id.toString())) : users
 
     return (
         <div className={`left scrollbar transition-transform duration-400 ${isMobile && selectedUsers ? "-translate-x-full" : "translate-x-0"} px-1`}>
@@ -42,6 +42,7 @@ const LeftSide = () => {
                 <input
                     onChange={() => setShow(prev => !prev)}
                     type="checkbox"
+                    checked={show}
                     className="peer hidden"
                 />
 
@@ -74,7 +75,7 @@ const LeftSide = () => {
                     )
                 }
                 {filteredUsers?.map(user => {
-                    const isOnline = onlineUsers.includes(user._id);
+                    const isOnline = onlineUsers.includes(user._id.toString());
 
                     return (
                         <div
