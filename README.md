@@ -165,7 +165,7 @@ If you like this project, give it a ⭐ on GitHub — it really helps!
 
 ### 💬 Chat Interface
 
-![Chat UI Screenshot]()
+![Chat UI Screenshot](https://github.com/Parmarkuldeep117/fullstack-ChatApp/issues/6#issue-3784818389)
 
 ### 🧑‍🤝‍🧑 User List / Conversations
 
