@@ -8,19 +8,17 @@
     box-sizing: border-box;
 }
 
-@layer utilities {
 
-    .font-black-ops {
-        font-family: "Black Ops One", system-ui;
-        font-weight: 500;
-        font-style: normal;
-    }
-
-    .font-bartle {
-        font-family: "BBH Bartle", sans-serif;
-    }
-
+.font-black-ops {
+    font-family: "Black Ops One", system-ui;
+    font-weight: 500;
+    font-style: normal;
 }
+
+.font-bartle {
+    font-family: "BBH Bartle", sans-serif;
+}
+
 
 
 input[type="password"]::-ms-reveal,
@@ -29,15 +27,13 @@ input[type="password"]::-webkit-textfield-decoration-container {
     display: none;
 }
 
-@layer utilities {
-    .scrollbar ::-webkit-scrollbar {
-        display: none;
-    }
+.scrollbar ::-webkit-scrollbar {
+    display: none;
+}
 
-    .scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+.scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 .active {
