@@ -22,7 +22,7 @@ const Navbar = () => {
 
   return (
     <header
-      className="w-full text-base-content brand-font shadow-md">
+      className="w-full text-base-content font-bartle shadow-md">
       <div className={`max-w-7xl h-15 mx-auto flex items-center justify-end ${isMobile ? "px-1" : "px-5"} py-1`}>
 
         <NavLink to="/home" className="flex mr-auto items-center ">
@@ -32,7 +32,7 @@ const Navbar = () => {
             className="size-14 object-cover"
           />
           <span
-            className="text-xl text-base-content p-1 rounded bg-base-300 brand-font font-bold rounded-r-2xl px-2 pr-3 tracking-wider">YAPPY</span>
+            className="text-xl text-base-content p-1 rounded bg-base-300 font-bartle font-bold rounded-r-2xl px-2 pr-3 tracking-wider">YAPPY</span>
         </NavLink>
         <Menu
           onClick={() => {

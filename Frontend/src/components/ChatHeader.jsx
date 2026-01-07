@@ -49,7 +49,7 @@ const ChatHeader = () => {
                 {isMobile && <ArrowLeft onClick={() => { changeState() }} />}
                 <img
                     onClick={() => { setPreview(profilepic) }}
-                    className={`${isMobile ? "size-11" : "size-10"} cursor-pointer object-cover rounded-[50%]`} src={profilepic || "/default.jpg"} alt="profilepic" />
+                    className={`${isMobile ? "size-11" : "size-8"} cursor-pointer object-cover rounded-[50%]`} src={profilepic || "/default.jpg"} alt="profilepic" />
                 <div className="flex flex-col">
                     <h2>{fullName.charAt(0).toUpperCase() + fullName.slice(1)}</h2>
                     <h2>{status && <h4 className="text-[0.6rem] transition-all duration-1000 ease-in text-green-500">Online</h4>}</h2>

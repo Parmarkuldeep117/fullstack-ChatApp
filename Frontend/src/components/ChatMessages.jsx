@@ -40,7 +40,7 @@ const ChatMessages = () => {
 
     if (!messages || messages.length === 0) {
         return (
-            <div className="p-4 h-full flex flex-col leading-8 justify-center place-items-center text-sm opacity-60">
+            <div className="p-4 h-full flex flex-col leading-8 justify-center place-items-center bg-base-100 text-sm opacity-60">
                 <h1 className="tracking-wide">No messages yet</h1>
                 <h1 className="text-center tracking-widest text-2xl">Start the Yapping 👻</h1>
             </div>
@@ -48,7 +48,7 @@ const ChatMessages = () => {
     }
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="flex flex-col bg-base-100 gap-4 p-4">
             <ImagePreview
                 src={previewImage}
                 onClose={() => setPreviewImage(null)}
@@ -93,7 +93,7 @@ const ChatMessages = () => {
                                 }
               `}
                         >
-                            {msg.text && <p className="transition ease-in duration-300">{msg.text}</p>}
+                            {msg.text && <p>{msg.text}</p>}
 
                             {msg?.media?.type === "image" ? (
                                 <img

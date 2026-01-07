@@ -22,13 +22,6 @@
 
 }
 
-@layer base {
-    .brand-font {
-        font-family: var(--font-bartle);
-        letter-spacing: 0.08em;
-    }
-}
-
 
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear,
