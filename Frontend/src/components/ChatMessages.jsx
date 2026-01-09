@@ -1,5 +1,6 @@
 import { File, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import useIsMobile from "../hook/useIsMobile";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
 import ImagePreview from "./ImagePreview";
@@ -9,6 +10,7 @@ const ChatMessages = () => {
     const { messages, selectedUsers } = useMessageStore();
     const [previewImage, setPreviewImage] = useState(null);
     const bottomRef = useRef(null)
+    const isMobile = useIsMobile()
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "auto" });
@@ -40,7 +42,7 @@ const ChatMessages = () => {
 
     if (!messages || messages.length === 0) {
         return (
-            <div className="p-4 h-full flex flex-col leading-8 justify-center place-items-center text-sm opacity-60">
+            <div className={`p-4 h-full flex flex-col leading-8 justify-center ${isMobile && "bg-base-200"} place-items-center text-sm opacity-60`}>
                 <h1 className="tracking-wide">No messages yet</h1>
                 <h1 className="text-center tracking-widest text-2xl">Start the Yapping 👻</h1>
             </div>
@@ -48,7 +50,7 @@ const ChatMessages = () => {
     }
 
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className={`flex flex-col ${isMobile && "bg-base-200"} gap-4 p-4`}>
             <ImagePreview
                 src={previewImage}
                 onClose={() => setPreviewImage(null)}
@@ -152,7 +154,7 @@ const ChatMessages = () => {
                                                         Download
                                                     </a></span>
                                                     <div
-                                                    className="absolute right-0 bottom-0"
+                                                        className="absolute right-0 bottom-0"
                                                     >{msg.senderId === authUser._id && msg.status === "sent" && <svg
                                                         className="text-base-content opacity-60"
                                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
