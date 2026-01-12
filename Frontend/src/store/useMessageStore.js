@@ -13,7 +13,7 @@ export const useMessageStore = create((set, get) => ({
 
 
     getUsers: async () => {
-        set({ isUserLoading: true })
+        set({ isUserLoading: true, users: [] })
         try {
             const res = await api.get("/messages/users")
             set({ users: res.data })
