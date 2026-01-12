@@ -42,6 +42,13 @@ const ChatMessages = () => {
 
 
 
+    if (isMessageLoading) {
+        return (
+            <div className={`flex-1 ${isMobile && "bg-base-200"} p-4`}>
+                <ChatSkeleton />
+            </div>
+        );
+    }
 
     if (!messages || messages.length === 0) {
         return (
@@ -58,7 +65,7 @@ const ChatMessages = () => {
                 src={previewImage}
                 onClose={() => setPreviewImage(null)}
             />
-            {isMessageLoading && <ChatSkeleton />}
+
             {messages.map((msg) => {
                 if (!msg) return null;
 
