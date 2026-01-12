@@ -1,6 +1,5 @@
 import { File, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import ChatSkeleton from "../components/ChatSkeleton";
 import useIsMobile from "../hook/useIsMobile";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
@@ -8,7 +7,7 @@ import ImagePreview from "./ImagePreview";
 
 const ChatMessages = () => {
     const { authUser } = useAuthStore();
-    const { messages, selectedUsers, isMessageLoading } = useMessageStore();
+    const { messages, selectedUsers } = useMessageStore();
     const [previewImage, setPreviewImage] = useState(null);
     const bottomRef = useRef(null)
     const isMobile = useIsMobile()
@@ -40,15 +39,6 @@ const ChatMessages = () => {
         };
     }, [previewImage]);
 
-
-
-    if (isMessageLoading) {
-        return (
-            <div className={`flex-1 ${isMobile && "bg-base-200"} p-4`}>
-                <ChatSkeleton />
-            </div>
-        );
-    }
 
     if (!messages || messages.length === 0) {
         return (
