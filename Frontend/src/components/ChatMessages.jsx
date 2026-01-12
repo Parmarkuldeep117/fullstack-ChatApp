@@ -4,6 +4,7 @@ import useIsMobile from "../hook/useIsMobile";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
 import ImagePreview from "./ImagePreview";
+import MessageSkeleton from "./MessageSkeleton";
 
 const ChatMessages = () => {
     const { authUser } = useAuthStore();
@@ -41,7 +42,7 @@ const ChatMessages = () => {
 
 
 
-    if (isMessageLoading) return <ChatSkeleton />
+    if (isMessageLoading) return <MessageSkeleton />
     if (!messages || messages.length === 0) {
         return (
             <div className={`p-4 h-full flex flex-col leading-8 justify-center ${isMobile && "bg-base-200"} place-items-center text-sm opacity-60`}>

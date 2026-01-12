@@ -1,10 +1,10 @@
-import { Check, FileText, Image, Loader, NotebookTabs, Video } from "lucide-react";
+import { Check, FileText, Image, NotebookTabs, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LeftSideSkeleton from "../components/LeftSideSkeleton";
 import useIsMobile from "../hook/useIsMobile";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
-import LeftSideSkeleton from "../components/LeftSideSkeleton"
 
 const LeftSide = () => {
     const { setUser, users, isUserLoading, getUsers, selectedUsers } = useMessageStore();
@@ -31,7 +31,6 @@ const LeftSide = () => {
 
 
     const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id)) : users
-    if (isUserLoading) return <LeftSideSkeleton />
     return (
         <div className={`left scrollbar transition-transform duration-400 ${isMobile && selectedUsers ? "-translate-x-full" : "translate-x-0"} px-1`}>
             <h1
@@ -63,6 +62,7 @@ const LeftSide = () => {
             </label>
 
             <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
+                {isUserLoading && <LeftSideSkeleton />}
 
                 {
                     filteredUsers.length === 0 && (
