@@ -1,7 +1,7 @@
 import { Loader } from 'lucide-react';
 import { useEffect } from "react";
 import { Toaster } from "react-hot-toast";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Navbar from "./components/Navbar";
 import { useAuthStore } from "./store/useAuthStore";
 import { useMessageStore } from './store/useMessageStore';
@@ -10,8 +10,7 @@ import { useThemeStore } from './store/useThemeStore';
 const App = () => {
 
   const { checkAuth, authUser, isCheckingAuth, connectSocket, disconnectSocket, socket } = useAuthStore()
-  const { listenToMessages, stopListening, reset } = useMessageStore()
-  const navigate = useNavigate()
+  const { listenToMessages, stopListening } = useMessageStore()
   const { theme } = useThemeStore()
 
   useEffect(() => {

@@ -19,6 +19,25 @@
     font-family: "BBH Bartle", sans-serif;
 }
 
+@keyframes shimmer {
+    0% {
+        background-position: -450px 0;
+    }
+
+    100% {
+        background-position: 450px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(90deg,
+            var(--fallback-b1, #e5e7eb) 25%,
+            var(--fallback-b2, #f3f4f6) 37%,
+            var(--fallback-b1, #e5e7eb) 63%);
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
 
 
 input[type="password"]::-ms-reveal,
@@ -143,4 +162,24 @@ input[type="password"]::-webkit-textfield-decoration-container {
         padding: 10px;
         border-radius: 20px;
     }
+
+    @keyframes shimmer {
+        0% {
+            background-position: -450px 0;
+        }
+
+        100% {
+            background-position: 450px 0;
+        }
+    }
+
+    .shimmer {
+        background: linear-gradient(90deg,
+                var(--fallback-b1, #e5e7eb) 25%,
+                var(--fallback-b2, #f3f4f6) 37%,
+                var(--fallback-b1, #e5e7eb) 63%);
+        background-size: 400% 100%;
+        animation: shimmer 1.4s ease infinite;
+    }
+
 }
