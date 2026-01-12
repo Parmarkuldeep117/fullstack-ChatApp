@@ -60,7 +60,7 @@ const LeftSide = () => {
                     Show online users <span className="text-green-500">(online {onlineUsers.length})</span>
                 </span>
             </label>
-
+        
             <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
                 {isUserLoading && <LeftSideSkeleton />}
 
