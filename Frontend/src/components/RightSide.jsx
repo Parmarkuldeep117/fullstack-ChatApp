@@ -1,6 +1,7 @@
 import ChatHeader from "../components/ChatHeader";
 import ChatInput from "../components/ChatInput";
 import ChatMessages from "../components/ChatMessages";
+import ChatSkeleton from '../components/ChatSkeleton';
 import RightSkeleton from "../components/RightSkeleton";
 import useIsMobile from "../hook/useIsMobile";
 import { useMessageStore } from "../store/useMessageStore";
