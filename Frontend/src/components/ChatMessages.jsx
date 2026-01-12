@@ -7,7 +7,7 @@ import ImagePreview from "./ImagePreview";
 
 const ChatMessages = () => {
     const { authUser } = useAuthStore();
-    const { messages, selectedUsers } = useMessageStore();
+    const { messages, selectedUsers, isMessageLoading } = useMessageStore();
     const [previewImage, setPreviewImage] = useState(null);
     const bottomRef = useRef(null)
     const isMobile = useIsMobile()
@@ -40,6 +40,8 @@ const ChatMessages = () => {
     }, [previewImage]);
 
 
+
+    if (isMessageLoading) return <ChatSkeleton />
     if (!messages || messages.length === 0) {
         return (
             <div className={`p-4 h-full flex flex-col leading-8 justify-center ${isMobile && "bg-base-200"} place-items-center text-sm opacity-60`}>
