@@ -23,6 +23,11 @@ const getSideUsers = async (req, res) => {
             }
         }))
 
+        userWithLastMessage.sort((a, b) => {
+            if (!a.lastMessage) return 1
+            if (!b.lastMessage) return -1
+            return new Date(b.lastMessage.createdAt) - new Date(a.lastMessage.createdAt)
+        })
         res.status(200).json(userWithLastMessage)
     } catch (error) {
         console.log("Error in getSideUsers controller", error.message);
@@ -150,7 +155,7 @@ const sendMessages = async (req, res) => {
 
         res.status(201).json(newMessage)
 
-    } catch (error) {           
+    } catch (error) {
         console.log("Error in sendMessages controller", error.message);
         res.status(500).json({ message: "Internal server error" })
     }
