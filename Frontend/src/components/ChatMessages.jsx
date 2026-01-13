@@ -119,7 +119,7 @@ const ChatMessages = () => {
                                             onClick={() => { setPreviewImage(msg.media.url) }}
                                             className="absolute"
                                         >
-                                            <Play fill="#111" stroke="#111" size={50} className={`p-2 rounded-3xl hover:bg-green-500  `} />
+                                            <Play fill="#111" stroke="#111" size={50} className={`p-2 rounded-3xl cursor-pointer hover:bg-green-500  `} />
                                         </button>
                                     </div>
                                 ) : ""

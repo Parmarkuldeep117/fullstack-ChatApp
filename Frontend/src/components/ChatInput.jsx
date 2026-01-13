@@ -97,7 +97,7 @@ const ChatInput = () => {
 
       {/* Image Preview */}
       {preview && (
-        <div className="mb-2 relative w-fit">
+        <div className="mb-2 relative w-30 h-20">
           {file?.type === "application/pdf" ? (
             <div className="flex items-center gap-2 p-2 bg-base-300 rounded">
               <NotebookTabs size={20} />
@@ -107,7 +107,7 @@ const ChatInput = () => {
             <img
               src={preview}
               alt="preview"
-              className="h-20 rounded-lg object-cover"
+              className="h-full w-full rounded-lg object-cover"
             />
           )}
 
