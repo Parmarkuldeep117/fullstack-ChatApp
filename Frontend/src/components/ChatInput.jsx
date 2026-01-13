@@ -2,7 +2,7 @@ import EmojiPicker from "emoji-picker-react";
 import { NotebookTabs, Paperclip, Send, Smile, X } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
-import getVideoThumbnail from "../hook/getVideoThumbnail";
+import { getVideoThumbnail } from "../hook/getVideoThumbnail";
 import { useMessageStore } from "../store/useMessageStore";
 
 
@@ -14,34 +14,37 @@ const ChatInput = () => {
   const inputRef = useRef(null);
 
   const [text, setText] = useState("");
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
   const [showEmoji, setShowEmoji] = useState(false);
 
-  const handleFile = async(e) => {
-    const file = e.target.files[0];
-    if (!file) return;
 
-    const allowed = [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-      "video/mp4",
-      "video/webm",
-      "video/ogg",
-      "video/quicktime",
-      "application/pdf"
-    ];
+  const handleFile = async (e) => {
+    const selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
-    if(file.type.startsWith("video/")){
-      const thumb = await getVideoThumbnail(file)
-      return setImage(thumb)
+    // PDF size check
+    if (
+      selectedFile.type === "application/pdf" &&
+      selectedFile.size > 20 * 1024 * 1024
+    ) {
+      toast.error("PDF max size is 20MB");
+      return;
     }
 
-    if (file.type === "application/pdf" && file.size > 20 * 1024 * 1024) {
-      toast.error("file too long max(20 MB)")
+    // VIDEO → generate thumbnail
+    if (selectedFile.type.startsWith("video/")) {
+      const thumbnail = await getVideoThumbnail(selectedFile);
+      setPreview(thumbnail);       // string (dataURL)
+      setFile(selectedFile);       // real video
+      return;
     }
-    setImage(file);
+
+    // IMAGE / PDF
+    setPreview(URL.createObjectURL(selectedFile));
+    setFile(selectedFile);
   };
+
 
   // useEffect(() => {
   //   if (!showEmoji) {
@@ -72,19 +75,18 @@ const ChatInput = () => {
 
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!text.trim() && !image) return;
+    e.preventDefault();
+    if (!text.trim() && !file) return;
 
-    const formData = new FormData()
-    formData.append("text", text)
-    if (image) {
-      formData.append("image", image)
-    }
-    await sendMessages(formData)
-    // SEND LOGIC HERE (API / socket)
+    const formData = new FormData();
+    formData.append("text", text);
+    if (file) formData.append("image", file);
+
+    await sendMessages(formData);
 
     setText("");
-    setImage(null);
+    setFile(null);
+    setPreview(null);
     fileRef.current.value = "";
   };
 
@@ -94,36 +96,33 @@ const ChatInput = () => {
       className="border-t border-base-300 p-3 bg-base-200 relative">
 
       {/* Image Preview */}
-      {image && (
+      {preview && (
         <div className="mb-2 relative w-fit">
-          {image.type === "application/pdf" ? (
+          {file?.type === "application/pdf" ? (
             <div className="flex items-center gap-2 p-2 bg-base-300 rounded">
               <NotebookTabs size={20} />
-              <span>{image.name}</span>
+              <span>{file.name}</span>
             </div>
           ) : (
             <img
-              src={URL.createObjectURL(image)}
+              src={preview}
               alt="preview"
               className="h-20 rounded-lg object-cover"
             />
           )}
-          {image && image.type.startsWith("video/")
-            &&  <img
-              src={URL.createObjectURL(image)}
-              alt="preview"
-              className="h-15 rounded-lg object-cover"
-            />
-          }
 
           <button
-            onClick={() => setImage(null)}
+            onClick={() => {
+              setFile(null);
+              setPreview(null);
+            }}
             className="absolute -top-2 -right-2 bg-base-300 rounded-full p-1"
           >
             <X size={14} />
           </button>
         </div>
       )}
+
 
 
       {/* Emoji Picker */}
