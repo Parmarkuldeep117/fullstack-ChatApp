@@ -180,7 +180,7 @@ const ChatInput = () => {
         <button
           type="submit"
           className="btn bg-base-100 hover:bg-base-300"
-          disabled={!text.trim() && !image || isUploadingFile}
+          disabled={!text.trim() && !preview || isUploadingFile}
         >
           <Send size={18} />
         </button>
