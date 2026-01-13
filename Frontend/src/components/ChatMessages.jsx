@@ -97,7 +97,7 @@ const ChatMessages = () => {
                         )}
 
                         <div
-                            className={`max-w-[60%] p-3 rounded-xl text-sm break-words
+                            className={`max-w-[80%] p-1 rounded-xl text-sm break-words
                 ${isMe
                                     ? "bg-primary text-primary-content rounded-br-none"
                                     : "bg-base-300 rounded-bl-none"
@@ -128,7 +128,7 @@ const ChatMessages = () => {
                                             onClick={() => { setPreviewImage(msg.media.url) }}
                                             className="absolute"
                                         >
-                                            <Play fill="#111" stroke="#111" size={50} className={`p-2 rounded-3xl cursor-pointer hover:bg-green-500  `} />
+                                            <Play fill="#111" stroke="#111" size={50} className={`p-2 rounded-3xl cursor-pointer hover:bg-gray-500  `} />
                                         </button>
                                     </div>
                                 ) : ""
@@ -138,7 +138,7 @@ const ChatMessages = () => {
 
                             {/* Time */}
                             {time && (
-                                <div className={`mt-1 text-[0.6rem] flex gap-1 opacity-60 ${isMe ? "justify-end" : "justify-start"}`}>
+                                <div className={`mt-1 text-[0.6rem] flex gap-1 opacity-60 justify-end`}>
                                     {
                                         msg?.media?.type === "pdf" ? (
                                             <div
