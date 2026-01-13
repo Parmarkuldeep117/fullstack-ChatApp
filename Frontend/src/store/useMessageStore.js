@@ -87,14 +87,14 @@ export const useMessageStore = create((set, get) => ({
         })
 
         socket.off("message-read")
-        socket.on("message-read", ({ senderId, messageIds }) => {
+        socket.on("message-read", ({ messageIds }) => {
             set(state => ({
                 messages: state.messages.map(msg =>
                     messageIds.includes(msg._id.toString()) ? { ...msg, status: "read" } : msg
                 ),
 
                 users: state.users.map(user =>
-                    user._id === senderId ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
+                    messageIds.includes(user.lastMessage._id) ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
                 )
             }))
         })

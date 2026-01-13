@@ -69,7 +69,7 @@ io.on("connection", async (socket) => {
             const senderSocket = usersocketMap.get(senderId)
             senderSocket?.forEach((socketId) => {
                 io.to(socketId).emit("message-read", {
-                    messageIds, senderId
+                    messageIds
                 })
             })
 
