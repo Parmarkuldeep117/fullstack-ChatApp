@@ -2,7 +2,9 @@ import EmojiPicker from "emoji-picker-react";
 import { NotebookTabs, Paperclip, Send, Smile, X } from "lucide-react";
 import { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import getVideoThumbnail from "../hook/getVideoThumbnail";
 import { useMessageStore } from "../store/useMessageStore";
+
 
 const ChatInput = () => {
 
@@ -15,7 +17,7 @@ const ChatInput = () => {
   const [image, setImage] = useState(null);
   const [showEmoji, setShowEmoji] = useState(false);
 
-  const handleFile = (e) => {
+  const handleFile = async(e) => {
     const file = e.target.files[0];
     if (!file) return;
 
@@ -30,14 +32,9 @@ const ChatInput = () => {
       "application/pdf"
     ];
 
-    if (!allowed.includes(file.type)) {
-      toast.error("Invalid file type")
-      return
-    }
-
-    if (file.size > 100 * 1024 * 1024) {
-      toast.error("file too long max(100 MB)")
-      return
+    if(file.type.startsWith("video/")){
+      const thumb = await getVideoThumbnail(file)
+      return setImage(thumb)
     }
 
     if (file.type === "application/pdf" && file.size > 20 * 1024 * 1024) {
@@ -111,6 +108,13 @@ const ChatInput = () => {
               className="h-20 rounded-lg object-cover"
             />
           )}
+          {image && image.type.startsWith("video/")
+            &&  <img
+              src={URL.createObjectURL(image)}
+              alt="preview"
+              className="h-15 rounded-lg object-cover"
+            />
+          }
 
           <button
             onClick={() => setImage(null)}
