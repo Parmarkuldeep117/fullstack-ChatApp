@@ -60,12 +60,12 @@ const LeftSide = () => {
                     Show online users <span className="text-green-500">(online {onlineUsers.length})</span>
                 </span>
             </label>
-        
+
             <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
                 {isUserLoading && <LeftSideSkeleton />}
 
                 {
-                    filteredUsers.length === 0 && (
+                    show && filteredUsers.length === 0 && (
                         <div className="p-4">No online users</div>
                     )
                 }
@@ -98,13 +98,13 @@ const LeftSide = () => {
                                 <div className="text-[0.7rem] flex justify-items-start items-center gap-1 font-bold opacity-70 truncate max-w-[190px]">
                                     <div>
                                         {authUser._id === user.lastMessage?.senderId && user.lastMessage?.status === "read" && <svg
-                                            className="text-blue-500 opacity-60"
+                                            className="text-blue-500"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M2.5 13.8333L6 17.5L7.02402 16.4272M16.5 6.5L10.437 12.8517" />
                                             <path d="M7.5 13.8333L11 17.5L21.5 6.5" />
                                         </svg>}
                                         {authUser._id === user.lastMessage?.senderId && user.lastMessage?.status === "delivered" && <svg
-                                            className="text-base-content opacity-60"
+                                            className="text-base-content"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M2.5 13.8333L6 17.5L7.02402 16.4272M16.5 6.5L10.437 12.8517" />
                                             <path d="M7.5 13.8333L11 17.5L21.5 6.5" />
