@@ -57,7 +57,6 @@ io.on("connection", async (socket) => {
             }).select("_id")
 
             const messageIds = messages.map(m => m._id.toString())
-            if (!messageIds.length === 0) return
 
             await Message.updateMany(
                 {

@@ -90,7 +90,7 @@ export const useMessageStore = create((set, get) => ({
         socket.on("message-read", ({ senderId, messageIds }) => {
             set(state => ({
                 messages: state.messages.map(msg =>
-                    messageIds.includes(msg._id) ? { ...msg, status: "read" } : msg
+                    messageIds.includes(msg._id.toString()) ? { ...msg, status: "read" } : msg
                 ),
 
                 users: state.users.map(user =>
@@ -106,7 +106,8 @@ export const useMessageStore = create((set, get) => ({
         if (!socket) return
         socket?.off("new-message")
         socket?.off("message-delivered")
-        // socket?.off("mark-read")
+        socket?.off("mark-read")
+        socket?.off("message-read")
     },
 
     getMessages: async (userId) => {
