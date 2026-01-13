@@ -60,7 +60,7 @@ const Profile = () => {
           />
         </label>
 
-        {isUpdatingProfile ? <h3 className='text-center mt-2 text-[0.7rem] text-gray-600'><Loader className='animate-spin'/></h3> : <h3 className='text-center mt-2 text-[0.77rem] text-gray-600'>Click on the camera to update your profile</h3>}
+        {isUpdatingProfile ? <h3 className='flex justify-center mt-2 text-[0.7rem] text-gray-600'><Loader className='animate-spin'/></h3> : <h3 className='text-center mt-2 text-[0.77rem] text-gray-600'>Click on the camera to update your profile</h3>}
 
         <div className="fullname mt-10">
           <h3 className='flex gap-1 mb-2 justify-start items-center'><User className='h-5 text-base-content' /> <span className="name text-base-content">Full Name</span></h3>
