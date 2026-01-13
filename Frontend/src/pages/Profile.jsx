@@ -1,4 +1,4 @@
-import { Camera, Mail, User } from 'lucide-react';
+import { Camera, Loader, Mail, User } from 'lucide-react';
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore.js";
 const Profile = () => {
@@ -34,7 +34,7 @@ const Profile = () => {
  rounded-2xl p-5 w-[50%] relative">
 
         <h3 className="text-center text-xl font-bold mb-3 tracking-wider text-base-content">Profile</h3>
-        <h4 className="text-center text-[0.77rem] border-base-300 border text-content-base  tracking-widest mb-10">
+        <h4 className="text-center text-[0.77rem] text-content-base  tracking-widest mb-10">
           your profile information
         </h4>
 
@@ -60,7 +60,7 @@ const Profile = () => {
           />
         </label>
 
-        {isUpdatingProfile ? <h3 className='text-center mt-2 text-[0.7rem] text-gray-600'>Updating...</h3> : <h3 className='text-center mt-2 text-[0.77rem] text-gray-600'>Click on the camera to update your profile</h3>}
+        {isUpdatingProfile ? <h3 className='text-center mt-2 text-[0.7rem] text-gray-600'><Loader className='animate-spin'/></h3> : <h3 className='text-center mt-2 text-[0.77rem] text-gray-600'>Click on the camera to update your profile</h3>}
 
         <div className="fullname mt-10">
           <h3 className='flex gap-1 mb-2 justify-start items-center'><User className='h-5 text-base-content' /> <span className="name text-base-content">Full Name</span></h3>
@@ -76,7 +76,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className='mb-6 border border-base-300 text-gray-600 text-center mt-10 account'>
+        <div className='mb-6 text-gray-600 text-center mt-10 account'>
           <h1 >Account Information</h1>
         </div>
 
