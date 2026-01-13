@@ -39,31 +39,15 @@ export const useMessageStore = create((set, get) => ({
                     (state.selectedUsers._id === message.senderId ||
                         state.selectedUsers._id === message.receiverId)
 
-                // 🔔 SHOW TOAST ONLY IF CHAT IS NOT OPEN
-                if (!isCurrentChat) {
-                    const sender = state.users.find(
-                        (u) => u._id === message.senderId
-                    )
+                // Update users list
+                const updatedUsers = state.users.map((user) => {
+                    if (user._id === message.senderId) {
+                        return { ...user, lastMessage: message }
+                    }
+                    return user
+                })
 
-                    toast.custom((t) => (
-                        <div
-                            className="bg-neutral text-neutral-content px-4 py-3 rounded-lg shadow-md cursor-pointer"
-                            onClick={() => toast.dismiss(t.id)}
-                        >
-                            <strong>{sender?.username || "New Message"}</strong>
-                            <p className="text-sm truncate">{message.text}</p>
-                        </div>
-                    ))
-                }
-
-                // Update users
-                const updatedUsers = state.users.map((user) =>
-                    user._id === message.senderId
-                        ? { ...user, lastMessage: message }
-                        : user
-                )
-
-                // Move to top
+                // Move active user to top
                 updatedUsers.sort(
                     (a, b) =>
                         new Date(b.lastMessage?.createdAt || 0) -
