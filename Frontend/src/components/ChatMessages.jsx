@@ -6,7 +6,7 @@ import { useMessageStore } from "../store/useMessageStore";
 import ImagePreview from "./ImagePreview";
 
 const ChatMessages = () => {
-    const { authUser } = useAuthStore();
+    const { authUser, socket } = useAuthStore();
     const { messages, selectedUsers } = useMessageStore();
     const [previewImage, setPreviewImage] = useState(null);
     const bottomRef = useRef(null)
@@ -15,6 +15,15 @@ const ChatMessages = () => {
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "auto" });
     }, [selectedUsers, messages])
+
+
+    useEffect(() => {
+        if (!socket || !selectedUsers._id || !messages?.length) return
+
+        socket?.emit("mark-read", {
+            senderId: selectedUsers._id
+        })
+    }, [selectedUsers?._id, messages.length])
 
 
     useEffect(() => {

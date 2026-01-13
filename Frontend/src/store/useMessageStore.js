@@ -157,15 +157,13 @@ export const useMessageStore = create((set, get) => ({
     },
 
     setUser: async (user) => {
-        const { socket } = useAuthStore.getState()
+
         set({ selectedUsers: user, isMessageLoading: true, messages: [] });
 
         try {
             const res = await api.get(`/messages/${user._id}`);
             set({ messages: res.data });
-            socket?.emit("mark-read", {
-                senderId: user._id
-            })
+
         } catch (error) {
             toast.error(error.response?.data?.message);
         } finally {
