@@ -166,6 +166,12 @@ const ChatMessages = () => {
                                                             <path d="M2.5 13.8333L6 17.5L7.02402 16.4272M16.5 6.5L10.437 12.8517" />
                                                             <path d="M7.5 13.8333L11 17.5L21.5 6.5" />
                                                         </svg>}
+                                                        {msg.senderId === authUser._id && msg.status === "read" && <svg
+                                                            className="text-blue-500"
+                                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                                                            <path d="M2.5 13.8333L6 17.5L7.02402 16.4272M16.5 6.5L10.437 12.8517" />
+                                                            <path d="M7.5 13.8333L11 17.5L21.5 6.5" />
+                                                        </svg>}
                                                     </div>
                                                 </div>
                                             </div>

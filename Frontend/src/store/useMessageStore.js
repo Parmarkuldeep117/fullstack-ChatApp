@@ -85,6 +85,19 @@ export const useMessageStore = create((set, get) => ({
                 )
             }))
         })
+
+        socket.off("message-read")
+        socket.on("message-read", ({ senderId, messageIds }) => {
+            set(state => ({
+                messages: state.messages.map(msg =>
+                    messageIds.includes(msg._id) ? { ...msg, status: "read" } : msg
+                ),
+
+                users: state.users.map(user =>
+                    user._id === senderId ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
+                )
+            }))
+        })
     },
 
 
@@ -143,11 +156,15 @@ export const useMessageStore = create((set, get) => ({
     },
 
     setUser: async (user) => {
+        const { socket } = useAuthStore.getState()
         set({ selectedUsers: user, isMessageLoading: true, messages: [] });
 
         try {
             const res = await api.get(`/messages/${user._id}`);
             set({ messages: res.data });
+            socket?.emit("mark-read", {
+                senderId: user._id
+            })
         } catch (error) {
             toast.error(error.response?.data?.message);
         } finally {

@@ -47,6 +47,38 @@ io.on("connection", async (socket) => {
         })
     })
 
+
+    socket.on("mark-read", async ({ senderId }) => {
+        try {
+            const messages = await Message.find({
+                senderId,
+                receiverId: userId,
+                status: { $ne: "read" }
+            }).select("_id")
+
+            const messageIds = messages.map(m => m._id.toString())
+            if (!messageIds.length === 0) return
+
+            await Message.updateMany(
+                {
+                    _id: { $in: messageIds }
+                }
+                ,
+                { $set: { status: "read" } }
+            )
+
+            const senderSocket = usersocketMap.get(senderId)
+            senderSocket?.forEach((socketId) => {
+                io.to(socketId).emit("message-read", {
+                    messageIds, senderId
+                })
+            })
+
+        } catch (error) {
+            console.log("Error making messages as read", error.message)
+        }
+    })
+
     socket.on("disconnect", () => {
         const sockets = usersocketMap.get(userId)
         sockets?.delete(socket.id)
