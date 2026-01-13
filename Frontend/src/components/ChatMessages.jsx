@@ -97,7 +97,7 @@ const ChatMessages = () => {
                         )}
 
                         <div
-                            className={`max-w-[80%] p-1 rounded-xl text-sm break-words
+                            className={`max-w-[80%] p-2 rounded-xl text-sm break-words
                 ${isMe
                                     ? "bg-primary text-primary-content rounded-br-none"
                                     : "bg-base-300 rounded-bl-none"

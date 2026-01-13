@@ -77,7 +77,7 @@ const LeftSide = () => {
                             key={user._id}
                             onClick={() => showUsers(user)}
                             className="flex p-2 relative cursor-pointer gap-3
-                            active:bg-base-300 hover:bg-base-200"
+                            active:bg-base-100 hover:bg-base-300"
                         >
 
                             <div className="rounded-[50%] overflow-hidden shrink-0">
