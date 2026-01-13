@@ -56,8 +56,8 @@ io.on("connection", async (socket) => {
                 status: { $ne: "read" }
             }).select("_id")
 
+            if (messages.length === 0) return
             const messageIds = messages.map(m => m._id.toString())
-
             await Message.updateMany(
                 {
                     _id: { $in: messageIds }
