@@ -27,37 +27,82 @@ export const useMessageStore = create((set, get) => ({
     },
 
     listenToMessages: () => {
-        const { socket } = useAuthStore.getState();
-        if (!socket) return;
+        const { socket } = useAuthStore.getState()
+        if (!socket) return
 
-        socket?.off("new-message")
+        socket.off("new-message")
+
         socket.on("new-message", (message) => {
-            set(state => {
-                const currentChat = state.selectedUsers && (state.selectedUsers._id === message.senderId || state.selectedUsers._id === message.receiverId)
+            set((state) => {
+                const isCurrentChat =
+                    state.selectedUsers &&
+                    (state.selectedUsers._id === message.senderId ||
+                        state.selectedUsers._id === message.receiverId)
+
+                // 🔔 SHOW TOAST ONLY IF CHAT IS NOT OPEN
+                if (!isCurrentChat) {
+                    const sender = state.users.find(
+                        (u) => u._id === message.senderId
+                    )
+
+                    toast.custom((t) => (
+                        <div
+                            className="bg-neutral text-neutral-content px-4 py-3 rounded-lg shadow-md cursor-pointer"
+                            onClick={() => toast.dismiss(t.id)}
+                        >
+                            <strong>{sender?.username || "New Message"}</strong>
+                            <p className="text-sm truncate">{message.text}</p>
+                        </div>
+                    ))
+                }
+
+                // Update users
+                const updatedUsers = state.users.map((user) =>
+                    user._id === message.senderId
+                        ? { ...user, lastMessage: message }
+                        : user
+                )
+
+                // Move to top
+                updatedUsers.sort(
+                    (a, b) =>
+                        new Date(b.lastMessage?.createdAt || 0) -
+                        new Date(a.lastMessage?.createdAt || 0)
+                )
 
                 return {
-                    messages: currentChat ? [...state.messages, message] : state.messages,
-                    users: state.users.map(user => (
-                        user._id === message.senderId ? { ...user, lastMessage: message } : user
-                    ))
-
+                    messages: isCurrentChat
+                        ? [...state.messages, message]
+                        : state.messages,
+                    users: updatedUsers
                 }
             })
         })
 
-        socket?.off("message-delivered")
-        socket.on("message-delivered", ({ messageIds }) => (
-            set(state => ({
-                messages: state.messages.map(msg => (
-                    messageIds.includes(msg._id) ? { ...msg, status: "delivered" } : msg
-                )),
-                users: state.users.map(user => (
-                    messageIds.includes(user.lastMessage?._id) ? { ...user, lastMessage: { ...user.lastMessage, status: "delivered" } } : user
-                ))
-            }))
-        ))
+        socket.off("message-delivered")
 
+        socket.on("message-delivered", ({ messageIds }) => {
+            set((state) => ({
+                messages: state.messages.map((msg) =>
+                    messageIds.includes(msg._id)
+                        ? { ...msg, status: "delivered" }
+                        : msg
+                ),
+                users: state.users.map((user) =>
+                    messageIds.includes(user.lastMessage?._id)
+                        ? {
+                            ...user,
+                            lastMessage: {
+                                ...user.lastMessage,
+                                status: "delivered"
+                            }
+                        }
+                        : user
+                )
+            }))
+        })
     },
+
 
     stopListening: () => {
         const { socket } = useAuthStore.getState()
