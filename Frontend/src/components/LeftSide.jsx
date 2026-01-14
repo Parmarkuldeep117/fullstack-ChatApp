@@ -32,7 +32,7 @@ const LeftSide = () => {
 
     const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id)) : users
     return (
-        <div className={`left scrollbar h-screen transition-transform duration-400 ${isMobile && selectedUsers ? "-translate-x-full" : "translate-x-0"} px-1`}>
+        <div className={`left scrollbar h-[100vh] transition-transform duration-400 ${isMobile && selectedUsers ? "-translate-x-full" : "translate-x-0"} px-1`}>
             <h1
                 className="px-3 py-2 bg-base-100 rounded-2xl tracking-wider border-none font-black-ops flex gap-2 my-2 items-center text-2xl">
                 <NotebookTabs /> Contacts
