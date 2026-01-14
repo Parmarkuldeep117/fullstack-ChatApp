@@ -12,16 +12,16 @@ const RightSide = () => {
 
   if (isMessageLoading) {
     return (
-      <div className={`flex-1 ${isMobile && "bg-base-200 h-full"} p-4`}>
+      <div className={`flex-1 ${isMobile && "bg-base-200 h-screen"} p-4`}>
         <ChatSkeleton />
       </div>
     );
   }
 
   return (
-    <div className={`right ${isMobile && selectedUsers ? "fixed inset-0 z-100 bg-base-200" : ""} scrollbar h-full overflow-auto border-base-200`}>
+    <div className={`right ${isMobile && selectedUsers ? "fixed inset-0 z-100 bg-base-200" : ""} scrollbar h-screen overflow-auto border-base-200`}>
       {!selectedUsers ? <div className="h-full scrollbar overflow-auto"><RightSkeleton /></div> :
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-screen">
           <ChatHeader />
           <div className="h-[80vh] scrollbar overflow-auto">
             <ChatMessages />
