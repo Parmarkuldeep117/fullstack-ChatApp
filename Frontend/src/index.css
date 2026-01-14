@@ -84,12 +84,6 @@ input[type="password"]::-webkit-textfield-decoration-container {
     font-size: clamp(0.5rem, 0.7rem, 1rem);
 }
 
-.gridy{
-    display:grid;
-    grid-template-rows: repeat(auto,1fr,auto);
-    place-items: center;
-}
-
 .account {
     font-size: clamp(0.8rem, 1rem, 1.2rem);
 }

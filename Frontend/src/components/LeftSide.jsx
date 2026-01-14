@@ -61,8 +61,8 @@ const LeftSide = () => {
                 </span>
             </label>
 
-            <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
-                {isUserLoading && <LeftSideSkeleton />}
+            <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-full">
+                {isUserLoading && <LeftSideSkeleton className="scrollbar" />}
 
                 {
                     show && filteredUsers.length === 0 && (
