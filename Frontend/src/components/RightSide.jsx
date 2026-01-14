@@ -12,7 +12,7 @@ const RightSide = () => {
 
   if (isMessageLoading) {
     return (
-      <div className={`flex-1 ${isMobile && "bg-base-200 h-full"} p-4`}>
+      <div className={`flex-1 ${isMobile && "bg-base-200 h-[100dvh]"} p-4`}>
         <ChatSkeleton />
       </div>
     );

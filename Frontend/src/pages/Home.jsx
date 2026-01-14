@@ -22,7 +22,7 @@ const Home = () => {
 
 
   return (
-    <div className="h-full w-full scrollbar font-bartle ">
+    <div className="h-[100dvh] w-[100dvw] scrollbar font-bartle ">
 
       {!isMobile && <div className="griddy scrollbar mx-auto h-full w-[95vw]">
         {/* left side */}
