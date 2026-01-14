@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 
+const isProd = process.env.NODE_ENV === "production";
 const generateToken = (email,userId,res)=>{
     const token = jwt.sign(
         {email,userId},
@@ -9,8 +10,8 @@ const generateToken = (email,userId,res)=>{
     res.cookie("jwt",token,{
         maxAge: 7*1000*60*60*24,
         httpOnly:true,
-        sameSite: "none",
-        secure: true
+        sameSite: isProd ? "none" : "lax",
+        secure: isProd
     })
     return token
 }

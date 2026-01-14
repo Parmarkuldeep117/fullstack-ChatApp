@@ -48,7 +48,7 @@ const App = () => {
 
   return (
     <div
-      className='bg-base-200 scrollbar'
+      className='bg-base-200 scrollbar '
       data-theme={theme}>
       <Toaster
         position='top-center'
