@@ -20,7 +20,7 @@ const RightSide = () => {
 
   return (
     <div className={`right ${isMobile && selectedUsers ? "fixed bg-base-200 inset-0 z-100" : ""} scrollbar h-full overflow-auto border-base-200`}>
-      {!selectedUsers ? <div className="h-full scrollbar overflow-auto"><RightSkeleton /></div> :
+      {!selectedUsers ? !isMobile && <div className="h-full scrollbar overflow-auto"><RightSkeleton /></div> :
         <div className="flex flex-col h-full">
           <ChatHeader />
           <div className="h-[85vh] scrollbar overflow-auto">

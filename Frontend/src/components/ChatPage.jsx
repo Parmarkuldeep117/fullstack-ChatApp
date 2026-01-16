@@ -6,12 +6,18 @@ import RightSide from "./RightSide"
 
 const ChatPage = () => {
 
-    const { setUserById } = useMessageStore()
+    const { setUserById, getMessages, selectedUsers } = useMessageStore()
     const { userId } = useParams()
     const isMobile = useIsMobile()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        if (selectedUsers?._id) {
+            getMessages(selectedUsers._id)
+        }
+    }, [selectedUsers?._id, getMessages])
 
+    
     useEffect(() => {
         if (userId) {
             setUserById(userId)
