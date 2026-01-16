@@ -56,7 +56,7 @@ io.on("connection", async (socket) => {
                 status: { $ne: "read" }
             }).select("_id")
 
-            if (messages.length === 0) return
+            if (!messages.length) return
             const messageIds = messages.map(m => m._id.toString())
             await Message.updateMany(
                 {
@@ -69,6 +69,7 @@ io.on("connection", async (socket) => {
             const senderSocket = usersocketMap.get(senderId)
             senderSocket?.forEach((socketId) => {
                 io.to(socketId).emit("message-read", {
+                    senderId: userId,
                     messageIds
                 })
             })
