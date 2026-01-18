@@ -49,28 +49,34 @@ const LeftSide = () => {
                 <SearchInput value={query} onChange={handleSearch} />
             </div>
 
-            <label className="flex mb-4 justify-between mt-3 px-3 items-center gap-2 cursor-pointer select-none">
-                <input
-                    onChange={() => setShow(prev => !prev)}
-                    type="checkbox"
-                    className="peer hidden"
-                />
+            <label
+                onClick={() => setShow(prev => !prev)}
+                className="flex mb-4 justify-between mt-3 px-3 items-center cursor-pointer select-none"
+            >
                 <span className="text-[0.7rem]">
-                    Show online users <span className="text-green-500">(online {onlineUsers.length})</span>
+                    Show online users{" "}
+                    <span className="text-green-500">
+                        (online {onlineUsers.length})
+                    </span>
                 </span>
 
                 <div
-                    className="w-3 h-3 rounded-xl border border-base-400 flex items-center justify-center
-                    [&>svg]:opacity-0 [&>svg]:scale-75 [&>svg]:transition-all
-                    peer-checked:[&>svg]:opacity-100
-                    peer-checked:[&>svg]:scale-100
-                    peer-checked:[&>svg]:bg-base-100
-                    peer-checked:[&>svg]:rounded-xl"
+                    className={`
+      w-9 h-5 rounded-full relative transition-colors duration-200 ease-out
+      ${show ? "bg-green-500" : "bg-gray-400"}
+    `}
                 >
-                    <Check className="size-3 text-base-content" />
+                    <div
+                        className={`
+        absolute top-[2px] left-[2px]
+        w-4 h-4 bg-white rounded-full shadow-sm
+        transition-transform duration-300
+        ${show ? "translate-x-4" : ""}
+      `}
+                    />
                 </div>
-
             </label>
+
 
             <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
                 {isUserLoading && <LeftSideSkeleton />}
