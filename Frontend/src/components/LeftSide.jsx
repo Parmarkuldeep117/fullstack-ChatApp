@@ -1,10 +1,12 @@
-import { Check, FileText, Image, NotebookTabs, Video } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Check, FileText, Image, Video } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LeftSideSkeleton from "../components/LeftSideSkeleton";
+import SearchInput from "../components/SearchInput";
 import useIsMobile from "../hook/useIsMobile";
 import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
+
 
 const LeftSide = () => {
     const { setUser, users, isUserLoading, getUsers, selectedUsers } = useMessageStore();
@@ -12,6 +14,10 @@ const LeftSide = () => {
     const navigate = useNavigate()
     const isMobile = useIsMobile()
 
+    const debounceRef = useRef(null)
+
+
+    const [query, setQuery] = useState("")
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -20,7 +26,12 @@ const LeftSide = () => {
         }
     }, [authUser]);
 
-
+    const handleSearch = (value) => {
+        clearTimeout(debounceRef.current)
+        debounceRef.current = setTimeout(() => {
+            setQuery(value)
+        }, 200);
+    }
 
     const showUsers = (user) => {
         setUser(user);
@@ -30,35 +41,35 @@ const LeftSide = () => {
     };
 
 
-    const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id)) : users
+    const filteredUsers = show ? users?.filter(user => onlineUsers.includes(user._id)) : users.filter(user => user.fullName.toLowerCase().includes(query.toLowerCase()))
     return (
         <div className={`left scrollbar transition-transform duration-400 ${isMobile && selectedUsers ? "-translate-x-full" : "translate-x-0"} px-1`}>
-            <h1
-                className="px-3 py-2 bg-base-100 rounded-2xl tracking-wider border-none font-black-ops flex gap-2 my-2 items-center text-2xl">
-                <NotebookTabs /> Contacts
-            </h1>
+            <div
+                className="px-1 py-1 flex items-center relative bg-base-100 rounded-2xl tracking-wider my-2">
+                <SearchInput value={query} onChange={handleSearch} />
+            </div>
 
-            <label className="flex mb-4 max-w-fit mt-3 px-3 items-center gap-2 cursor-pointer select-none">
+            <label className="flex mb-4 justify-between mt-3 px-3 items-center gap-2 cursor-pointer select-none">
                 <input
                     onChange={() => setShow(prev => !prev)}
                     type="checkbox"
                     className="peer hidden"
                 />
+                <span className="text-[0.7rem]">
+                    Show online users <span className="text-green-500">(online {onlineUsers.length})</span>
+                </span>
 
                 <div
-                    className="w-3 h-3 rounded-[50%] border border-base-400 flex items-center justify-center
+                    className="w-3 h-3 rounded-xl border border-base-400 flex items-center justify-center
                     [&>svg]:opacity-0 [&>svg]:scale-75 [&>svg]:transition-all
                     peer-checked:[&>svg]:opacity-100
                     peer-checked:[&>svg]:scale-100
                     peer-checked:[&>svg]:bg-base-100
-                    peer-checked:[&>svg]:rounded-[50%]"
+                    peer-checked:[&>svg]:rounded-xl"
                 >
                     <Check className="size-3 text-base-content" />
                 </div>
 
-                <span className="text-[0.7rem]">
-                    Show online users <span className="text-green-500">(online {onlineUsers.length})</span>
-                </span>
             </label>
 
             <div className="contacts py-2 gap-1 flex flex-col overflow-y-auto scrollbar h-[90vh]">
