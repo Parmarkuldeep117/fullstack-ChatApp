@@ -14,8 +14,8 @@ const SearchInput = ({ value, onChange }) => {
         rounded-xl
         cursor-text
         transition-all
-        focus-within:ring-2
-        focus-within:ring-secondary
+        focus-within:ring-4
+        focus-within:ring-base-300
       "
         >
             <Search size={16} className="opacity-60" />
