@@ -11,7 +11,7 @@ const usersocketMap = new Map()
 
 const io = new Server(server, {
     cors: {
-        origin: [process.env.CLIENT_URL,"http://localhost:5173"],
+        origin: [process.env.CLIENT_URL, "http://localhost:5173"],
         credentials: true,
     }
 })
@@ -33,10 +33,12 @@ io.on("connection", async (socket) => {
 
     const messageIds = undelivered.map(m => m._id)
 
-    await Message.updateMany(
-        { _id: { $in: messageIds } },
-        { $set: { status: "delivered" } }
-    )
+    if (messageIds.length) {
+        await Message.updateMany(
+            { _id: { $in: messageIds } },
+            { $set: { status: "delivered" } }
+        )
+    }
 
     undelivered.forEach(msg => {
         const senderSockets = usersocketMap.get(msg.senderId.toString())

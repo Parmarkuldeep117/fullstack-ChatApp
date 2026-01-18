@@ -10,6 +10,13 @@ const getSideUsers = async (req, res) => {
         const filteredUser = await User.find({ _id: { $ne: loggedinId } }).select("-password")
 
         const userWithLastMessage = await Promise.all(filteredUser.map(async (user) => {
+
+            const unreadCount = await Message.countDocuments({
+                senderId: user._id,
+                receiverId: loggedinId,
+                status: { $ne: "read" }
+            })
+
             const lastMessage = await Message.findOne({
                 $or: [
                     { senderId: loggedinId, receiverId: user._id },
@@ -19,7 +26,8 @@ const getSideUsers = async (req, res) => {
 
             return {
                 ...user.toObject(),
-                lastMessage
+                lastMessage,
+                unreadCount
             }
         }))
 

@@ -1,4 +1,4 @@
-import { Check, FileText, Image, Video } from "lucide-react";
+import { FileText, Image, Video } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LeftSideSkeleton from "../components/LeftSideSkeleton";
@@ -88,7 +88,7 @@ const LeftSide = () => {
                 }
                 {filteredUsers?.map(user => {
                     const isOnline = onlineUsers.includes(user._id);
-
+                    console.log(user)
                     return (
                         <div
                             key={user._id}
@@ -107,10 +107,22 @@ const LeftSide = () => {
                             {isOnline && <div className="size-3  absolute left-12 top-10  rounded-[50%] bg-green-500 border-2 border-base-100"></div>}
 
                             <div className="user flex flex-col justify-between">
-                                <h2>
-                                    {user.fullName.charAt(0).toUpperCase() +
-                                        user.fullName.slice(1)}
-                                </h2>
+                                <div className="flex relative">
+                                    <h2>
+                                        {user.fullName.charAt(0).toUpperCase() +
+                                            user.fullName.slice(1)}
+                                    </h2>
+                                    {
+                                        user.unreadCount > 0 ? <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{user?.unreadCount}</h2> : ""
+                                    }
+                                    {
+                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem] absolute ${isMobile && "left-60"} left-43 text-secondary top-1 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() ===  new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([],{
+                                            hour: "2-digit",
+                                            minute: "2-digit",
+                                            hour12: true
+                                        }) : new Date().toLocaleDateString()}</h2> : "" 
+                                    }
+                                </div>
                                 <div className="text-[0.7rem] flex justify-items-start items-center gap-1 font-bold opacity-70 truncate max-w-[190px]">
                                     <div>
                                         {authUser._id === user.lastMessage?.senderId && user.lastMessage?.status === "read" && <svg
