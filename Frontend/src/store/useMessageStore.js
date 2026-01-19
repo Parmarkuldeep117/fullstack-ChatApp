@@ -61,7 +61,7 @@ export const useMessageStore = create((set, get) => ({
                         ? [...state.messages, message]
                         : state.messages,
                     users: updatedUsers,
-                    unReadCount: unReadBadge
+                    userReadCount: unReadBadge
                 }
             })
         })
@@ -100,7 +100,7 @@ export const useMessageStore = create((set, get) => ({
                     user._id === senderId ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
                 ),
 
-                unReadCount: { ...state.unReadCount, [senderId]: 0 }
+                userReadCount: { ...state.userReadCount, [senderId]: 0 }
             }))
         })
     },
@@ -163,7 +163,7 @@ export const useMessageStore = create((set, get) => ({
 
     setUser: async (user) => {
 
-        set({ selectedUsers: user, isMessageLoading: true, messages: [], unReadCount: { ...state.unReadCount, [user._id]: 0 } });
+        set({ selectedUsers: user, isMessageLoading: true, messages: [], userReadCount: { ...state.userReadCount, [user._id]: 0 } });
 
         try {
             const res = await api.get(`/messages/${user._id}`);
