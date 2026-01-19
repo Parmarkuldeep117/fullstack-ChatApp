@@ -9,7 +9,7 @@ import { useMessageStore } from "../store/useMessageStore";
 
 
 const LeftSide = () => {
-    const { setUser, users, isUserLoading, getUsers, selectedUsers, messages } = useMessageStore();
+    const { setUser, users, isUserLoading, getUsers, selectedUsers, messages, unReadCount } = useMessageStore();
     const { authUser, onlineUsers } = useAuthStore();
     const navigate = useNavigate()
     const isMobile = useIsMobile()
@@ -24,7 +24,7 @@ const LeftSide = () => {
         if (authUser) {
             getUsers();
         }
-    }, [authUser,messages]);
+    }, [authUser, messages]);
 
     const handleSearch = (value) => {
         clearTimeout(debounceRef.current)
@@ -113,14 +113,14 @@ const LeftSide = () => {
                                             user.fullName.slice(1)}
                                     </h2>
                                     {
-                                        user.unreadCount > 0 ? <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{user?.unreadCount}</h2> : ""
+                                        unReadCount > 0 ? <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{unReadCount}</h2> : ""
                                     }
                                     {
-                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem] absolute ${isMobile && "left-60"} left-43 text-secondary top-1 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() ===  new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([],{
+                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem] absolute ${isMobile && "left-60"} left-43 text-secondary top-1 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() === new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([], {
                                             hour: "2-digit",
                                             minute: "2-digit",
                                             hour12: true
-                                        }) : new Date().toLocaleDateString()}</h2> : "" 
+                                        }) : new Date().toLocaleDateString()}</h2> : ""
                                     }
                                 </div>
                                 <div className="text-[0.7rem] flex justify-items-start items-center gap-1 font-bold opacity-70 truncate max-w-[190px]">

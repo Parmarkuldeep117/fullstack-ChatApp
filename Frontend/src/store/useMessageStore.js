@@ -6,6 +6,7 @@ import { useAuthStore } from "./useAuthStore"
 export const useMessageStore = create((set, get) => ({
     messages: [],
     users: [],
+    userReadCount: {},
     selectedUsers: null,
     isUserLoading: false,
     isMessageLoading: false,
@@ -36,8 +37,9 @@ export const useMessageStore = create((set, get) => ({
             set((state) => {
                 const isCurrentChat =
                     state.selectedUsers &&
-                    (state.selectedUsers._id === message.senderId ||
-                        state.selectedUsers._id === message.receiverId)
+                    (state.selectedUsers._id === message.senderId)
+
+                const unReadBadge = isCurrentChat ? state.userReadCount : { ...state.userReadCount, [message.senderId]: ((state.userReadCount[message.senderId] || 0) + 1) }
 
                 // Update users list
                 const updatedUsers = state.users.map((user) => {
@@ -58,7 +60,8 @@ export const useMessageStore = create((set, get) => ({
                     messages: isCurrentChat
                         ? [...state.messages, message]
                         : state.messages,
-                    users: updatedUsers
+                    users: updatedUsers,
+                    unReadCount: unReadBadge
                 }
             })
         })
@@ -95,7 +98,9 @@ export const useMessageStore = create((set, get) => ({
 
                 users: state.users.map(user =>
                     user._id === senderId ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
-                )
+                ),
+
+                unReadCount: { ...state.unReadCount, [senderId]: 0 }
             }))
         })
     },
@@ -158,7 +163,7 @@ export const useMessageStore = create((set, get) => ({
 
     setUser: async (user) => {
 
-        set({ selectedUsers: user, isMessageLoading: true, messages: [] });
+        set({ selectedUsers: user, isMessageLoading: true, messages: [], unReadCount: { ...state.unReadCount, [user._id]: 0 } });
 
         try {
             const res = await api.get(`/messages/${user._id}`);
