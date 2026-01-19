@@ -93,7 +93,7 @@ const LeftSide = () => {
                         <div
                             key={user._id}
                             onClick={() => showUsers(user)}
-                            className="flex p-2 relative cursor-pointer gap-3
+                            className="flex w-full p-2 relative cursor-pointer gap-3
                             active:bg-base-100 hover:bg-base-300"
                         >
 
@@ -106,8 +106,8 @@ const LeftSide = () => {
                             </div>
                             {isOnline && <div className="size-3  absolute left-12 top-10  rounded-[50%] bg-green-500 border-2 border-base-100"></div>}
 
-                            <div className="user flex flex-col justify-between">
-                                <div className="flex relative">
+                            <div className="user flex  w-full flex-col justify-between">
+                                <div className="flex justify-between items-center w-full relative">
                                     <h2>
                                         {user.fullName.charAt(0).toUpperCase() +
                                             user.fullName.slice(1)}
@@ -116,7 +116,7 @@ const LeftSide = () => {
                                         userReadCount[user._id] > 0 && <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{userReadCount[user._id]}</h2>
                                     }
                                     {
-                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem] absolute ${isMobile && "left-60"} left-43 text-green-500 top-1 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() === new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([], {
+                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem]  ${isMobile} text-green-500 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() === new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([], {
                                             hour: "2-digit",
                                             minute: "2-digit",
                                             hour12: true
