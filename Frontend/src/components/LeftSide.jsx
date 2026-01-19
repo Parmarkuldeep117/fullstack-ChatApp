@@ -113,7 +113,7 @@ const LeftSide = () => {
                                             user.fullName.slice(1)}
                                     </h2>
                                     {
-                                        userReadCount[user._id] > 0 ? <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{userReadCount[user._id]}</h2> : ""
+                                        userReadCount[user._id] > 0 && <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{userReadCount[user._id]}</h2>
                                     }
                                     {
                                         user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem] absolute ${isMobile && "left-60"} left-43 text-secondary top-1 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() === new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([], {

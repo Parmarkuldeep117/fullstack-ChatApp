@@ -34,22 +34,29 @@ export const useMessageStore = create((set, get) => ({
         socket.off("new-message")
 
         socket.on("new-message", (message) => {
+            const { authUser } = useAuthStore.getState()
+
             set((state) => {
                 const isCurrentChat =
-                    state.selectedUsers &&
-                    (state.selectedUsers._id === message.senderId || state.selectedUsers._id === message.receiverId)
+                    state.selectedUsers?._id === message.senderId
 
-                const unReadBadge = isCurrentChat ? state.userReadCount : { ...state.userReadCount, [message.senderId]: ((state.userReadCount[message.senderId] || 0) + 1) }
-
-                // Update users list
-                const updatedUsers = state.users.map((user) => {
-                    if (user._id === message.senderId) {
-                        return { ...user, lastMessage: message }
+                // update unread count ONLY if chat not open
+                const updatedUnread = isCurrentChat
+                    ? state.userReadCount
+                    : {
+                        ...state.userReadCount,
+                        [message.senderId]:
+                            (state.userReadCount[message.senderId] || 0) + 1
                     }
-                    return user
-                })
 
-                // Move active user to top
+                // update users list
+                const updatedUsers = state.users.map((user) =>
+                    user._id === message.senderId
+                        ? { ...user, lastMessage: message }
+                        : user
+                )
+
+                // move sender to top
                 updatedUsers.sort(
                     (a, b) =>
                         new Date(b.lastMessage?.createdAt || 0) -
@@ -61,7 +68,7 @@ export const useMessageStore = create((set, get) => ({
                         ? [...state.messages, message]
                         : state.messages,
                     users: updatedUsers,
-                    userReadCount: unReadBadge
+                    userReadCount: updatedUnread
                 }
             })
         })
@@ -91,18 +98,29 @@ export const useMessageStore = create((set, get) => ({
 
         socket.off("message-read")
         socket.on("message-read", ({ senderId, messageIds }) => {
-            set(state => ({
+            set((state) => ({
                 messages: state.messages.map(msg =>
-                    messageIds.includes(msg._id.toString()) ? { ...msg, status: "read" } : msg
+                    messageIds.includes(msg._id.toString())
+                        ? { ...msg, status: "read" }
+                        : msg
                 ),
-
                 users: state.users.map(user =>
-                    user._id === senderId ? { ...user, lastMessage: user.lastMessage ? { ...user.lastMessage, status: "read" } : user.lastMessage } : user
+                    user._id === senderId
+                        ? {
+                            ...user,
+                            lastMessage: user.lastMessage
+                                ? { ...user.lastMessage, status: "read" }
+                                : user.lastMessage
+                        }
+                        : user
                 ),
-
-                userReadCount: { ...state.userReadCount, [senderId]: 0 }
+                userReadCount: {
+                    ...state.userReadCount,
+                    [senderId]: 0
+                }
             }))
         })
+
     },
 
 
