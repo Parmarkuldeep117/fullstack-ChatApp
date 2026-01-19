@@ -37,7 +37,7 @@ export const useMessageStore = create((set, get) => ({
             set((state) => {
                 const isCurrentChat =
                     state.selectedUsers &&
-                    (state.selectedUsers._id === message.senderId)
+                    (state.selectedUsers._id === message.senderId || state.selectedUsers._id === message.receiverId)
 
                 const unReadBadge = isCurrentChat ? state.userReadCount : { ...state.userReadCount, [message.senderId]: ((state.userReadCount[message.senderId] || 0) + 1) }
 
@@ -162,19 +162,29 @@ export const useMessageStore = create((set, get) => ({
     },
 
     setUser: async (user) => {
+        set(state => ({
+            selectedUsers: user,
+            isMessageLoading: true,
+            messages: [],
+            userReadCount: {
+                ...state.userReadCount,
+                [user._id]: 0
+            }
+        }))
 
-        set({ selectedUsers: user, isMessageLoading: true, messages: [], userReadCount: { ...state.userReadCount, [user._id]: 0 } });
+        const { socket } = useAuthStore.getState()
+        socket?.emit("mark-read", { senderId: user._id })
 
         try {
-            const res = await api.get(`/messages/${user._id}`);
-            set({ messages: res.data });
-
+            const res = await api.get(`/messages/${user._id}`)
+            set({ messages: res.data })
         } catch (error) {
-            toast.error(error.response?.data?.message);
+            toast.error(error.response?.data?.message)
         } finally {
-            set({ isMessageLoading: false });
+            set({ isMessageLoading: false })
         }
     },
+
 
     reset: () => {
         set({ messages: [], selectedUsers: null })
