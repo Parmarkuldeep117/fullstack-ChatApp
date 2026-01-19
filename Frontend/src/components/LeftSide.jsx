@@ -9,7 +9,7 @@ import { useMessageStore } from "../store/useMessageStore";
 
 
 const LeftSide = () => {
-    const { setUser, users, isUserLoading, getUsers, selectedUsers } = useMessageStore();
+    const { setUser, users, isUserLoading, getUsers, selectedUsers, messages } = useMessageStore();
     const { authUser, onlineUsers } = useAuthStore();
     const navigate = useNavigate()
     const isMobile = useIsMobile()
@@ -24,7 +24,7 @@ const LeftSide = () => {
         if (authUser) {
             getUsers();
         }
-    }, [authUser]);
+    }, [authUser,messages]);
 
     const handleSearch = (value) => {
         clearTimeout(debounceRef.current)
