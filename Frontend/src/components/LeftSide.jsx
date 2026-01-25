@@ -8,6 +8,45 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useMessageStore } from "../store/useMessageStore";
 
 
+function formatLastMessageTime(createdAt) {
+    const msgDate = new Date(createdAt)
+    const now = new Date()
+
+    const isToday =
+        msgDate.toDateString() === now.toDateString()
+
+    const yesterday = new Date()
+    yesterday.setDate(now.getDate() - 1)
+
+    const isYesterday =
+        msgDate.toDateString() === yesterday.toDateString()
+
+    const diffDays = Math.floor(
+        (now - msgDate) / (1000 * 60 * 60 * 24)
+    )
+
+    if (isToday) {
+        return msgDate.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+        })
+    }
+
+    if (isYesterday) {
+        return "Yesterday"
+    }
+
+    if (diffDays < 7) {
+        return msgDate.toLocaleDateString([], {
+            weekday: "long"
+        })
+    }
+
+    return msgDate.toLocaleDateString()
+}
+
+
 const LeftSide = () => {
     const { setUser, users, isUserLoading, getUsers, selectedUsers, userReadCount } = useMessageStore();
     const { authUser, onlineUsers } = useAuthStore();
@@ -116,12 +155,13 @@ const LeftSide = () => {
                                         userReadCount[user._id] > 0 && <h2 className={`absolute left-47 ${isMobile && "left-65"} top-7 text-black text-[0.56rem] py-1 bg-green-500 px-2 rounded-2xl`}>{userReadCount[user._id]}</h2>
                                     }
                                     {
-                                        user.lastMessage?.createdAt ? <h2 className={`text-[0.56rem]  ${isMobile} text-green-500 text-nowrap`}>{new Date(user.lastMessage.createdAt).getDate() === new Date().getDate() ? new Date(user.lastMessage.createdAt).toLocaleTimeString([], {
-                                            hour: "2-digit",
-                                            minute: "2-digit",
-                                            hour12: true
-                                        }) : new Date().toLocaleDateString()}</h2> : ""
+                                        user.lastMessage?.createdAt && (
+                                            <h2 className={`text-[0.56rem] ${isMobile} text-green-500 text-nowrap`}>
+                                                {formatLastMessageTime(user.lastMessage.createdAt)}
+                                            </h2>
+                                        )
                                     }
+
                                 </div>
                                 <div className="text-[0.7rem] flex justify-items-start items-center gap-1 font-bold opacity-70 truncate max-w-[190px]">
                                     <div>
